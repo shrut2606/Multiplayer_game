@@ -1,0 +1,21 @@
+# === Node.js ===
+node_modules/
+.env
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# === React ===
+build/
+dist/
+*.log
+
+# === Misc ===
+.DS_Store
+.idea/
+.vscode/
+*.swp
+
+# === Socket.IO & server ===
+server/node_modules/
+server/.env
