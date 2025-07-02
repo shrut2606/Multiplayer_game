@@ -9,26 +9,29 @@ function App() {
   const [roomCode, setRoomCode] = useState("");
   const [players, setPlayers] = useState([]);
   const [joined, setJoined] = useState(false);
+  const [host, setHost] = useState("");
   const [error, setError] = useState(""); // <- new state for error message
 
   useEffect(() => {
     socket.on("room-players", (data) => {
-      setPlayers(data);
-      setError(""); // Clear error on successful update
+      setPlayers(data.players);
+      setHost(data.host);
+      setError("");
     });
 
-    socket.on("error-msg", msg => {
-      setError(msg); // <- set error message from server
+
+    socket.on("error-msg-join", msg => {
+      setError(msg);
       setJoined(false);
     });
   }, []);
 
   const createRoom = async () => {
-    const res = await axios.get("/create-room");
+    const res = await axios.post("/create-room",{name:name});
     const code = res.data.roomCode;
     setRoomCode(code);
-
-    // Call joinRoom *after* setting state completely
+    
+    // join the host
     socket.emit("join-room", { name, roomCode: code });
     setJoined(true);
   };
@@ -37,7 +40,11 @@ function App() {
   const joinRoom = () => {
   socket.emit("join-room", { name, roomCode });
   setJoined(true);
-};
+  };
+
+  const startGame=async()=>{
+    
+  }
 
 
   return (
@@ -65,6 +72,11 @@ function App() {
           <ul>
             {players.map((p, i) => <li key={i}>{p}</li>)}
           </ul>
+          {host==name?(
+            <button onClick={startGame}>Start Game</button>
+            ):(
+              <h2>Waiting for the  Host ({host}) to start the game</h2>
+          )}
         </>
       )}
     </div>
