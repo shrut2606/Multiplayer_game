@@ -29,6 +29,9 @@ app.post("/create-room", (req, res) => {
 
 
 io.on("connection", (socket) => {
+  socket.on("start-game", (roomCode) => {
+    io.to(roomCode).emit("game-started", roomCode);
+  });
   socket.on("join-room", ({ name, roomCode }) => {
   const room = activeRooms[roomCode];
   if (room) {
@@ -45,7 +48,7 @@ io.on("connection", (socket) => {
   } else {
     socket.emit("error-msg-join", "Room does not exist.");
   }
-});
+  });
 
 });
 
