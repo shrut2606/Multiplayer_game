@@ -1,21 +1,30 @@
-# === Node.js ===
+# Node modules
 node_modules/
+
+# Environment variables
 .env
+
+# Logs
+logs
+*.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-# === React ===
-build/
-dist/
-*.log
-
-# === Misc ===
-.DS_Store
-.idea/
-.vscode/
+# Debug files
 *.swp
 
-# === Socket.IO & server ===
-server/node_modules/
-server/.env
+# Operating system files
+.DS_Store
+Thumbs.db
+
+# VS Code settings
+.vscode/
+
+# Build output (optional, if any)
+dist/
+build/
+
+# PostgreSQL related (optional, only if you dump/import)
+*.sql
+*.dump
